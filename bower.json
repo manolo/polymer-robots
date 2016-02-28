@@ -1,0 +1,25 @@
+{
+  "name": "polymer-robots",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "manolo@vaadin.com"
+  ],
+  "license": "Apache-2.0",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.0",
+    "vaadin-core-elements": "Vaadin/vaadin-core-elements#master",
+    "vaadin-combo-box": "vaadin/vaadin-combo-box#master",
+    "vaadin-pouchdb": "manolo/vaadin-pouchdb#master"
+  }
+}

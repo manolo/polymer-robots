@@ -1,0 +1,127 @@
+
+body {
+  font-family: arial;
+}
+
+/* APP colors */
+paper-toolbar, paper-fab {
+  background-color: #009688 !important;
+  color: white;
+}
+
+ /* Left Tool Bar */
+paper-toolbar .top {
+  z-index: 1;
+  font-size: 1.4em;
+}
+#coverimage {
+  height: 191px;
+  top: 0;
+}
+#navheader img {
+  width: 80px;
+  height: 80px;
+  border: solid 3px rgba(0, 234, 255, 0.32);
+  border-radius: 50%;
+}
+#navheader {
+  overflow: hidden;
+}
+#bottomBar {
+  padding: 0px !important;
+}
+#bottomBar #labelAndInputContainer,
+#bottomBar #label,
+#middleBar > div,
+#bottomBar > div {
+  padding-left: 16px;
+}
+#scroller  {
+  max-height: 100% !important;
+}
+#bottomBar #label {
+  color: #FFC107 !important;
+}
+vaadin-combo-box input,
+vaadin-combo-box iron-icon {
+  color: white !important;
+  fill: white !important;
+}
+
+/* Left Menu */
+paper-icon-item {
+  display: block;
+  padding: 5px;
+}
+paper-icon-item iron-icon {
+  width: 56px !important;
+}
+/* */
+paper-spinner-lite {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 8px;
+}
+.paper-spinner-lite {
+  border-color: white !important;
+}
+/* Send message Form */
+.write {
+  padding: 0px 20px 5px 20px;
+}
+
+/* Settings dialog */
+paper-dialog {
+  padding: 5px;
+  min-width: 500px;
+}
+paper-dialog paper-button {
+  padding: 10px !important;
+  color: black;
+}
+paper-dialog paper-input {
+  width: 80%;
+  margin-bottom: 40px;
+}
+
+/* Misc */
+paper-input-container {
+  padding: 0px;
+}
+
+/* Badge */
+paper-badge {
+  margin: 5px -10px;
+}
+
+td.vaadin-grid, th.vaadin-grid {
+  padding: 0px 8px 0px 3px !important;
+  height: 30px;
+  overflow: visible !important;
+}
+td.vaadin-grid img {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background-image: url("robots-bg.jpg");
+}
+
+td:nth-child(2).vaadin-grid {
+  color: grey;
+  font-size: 70%;
+}
+td:nth-child(3).vaadin-grid {
+  width: 20px;
+  word-wrap: break-word;
+}
+
+/* tima-ago element */
+time-ago iron-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+time-ago > div {
+  font-size: 8px;
+  color: grey;
+  margin-left: -5px;
+}
