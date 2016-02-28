@@ -1,0 +1,22 @@
+{
+  "name": "polymer-robots",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "manolo@vaadin.com"
+  ],
+  "license": "Apache-2.0",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7",
+    "vaadin-core-elements": "Vaadin/vaadin-core-elements#^0.3.0"
+  }
+}
