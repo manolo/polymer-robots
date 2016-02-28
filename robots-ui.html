@@ -7,18 +7,26 @@
 <link rel="import" href="bower_components/iron-image/iron-image.html">
 <dom-module id="robots-ui">
   <template>
-
     <paper-drawer-panel>
       <paper-header-panel drawer>
         <paper-toolbar id="navheader"  class="tall">
+          <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
+          <div class="top">Robots Chat</div>
+          <img class="middle" src="https://robohash.org/foo" />
+          <div class="bottom">Robot Name</div>
         </paper-toolbar>
 
         <div>Content goes here...</div>
       </paper-header-panel>
-
       <paper-header-panel main>
         <paper-toolbar class="paper-header headerClass">
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+          <div class="flex title">Inbox</div>
+          <paper-icon-button icon="search"></paper-icon-button>
+          <paper-icon-button icon="refresh"></paper-icon-button>
+          <paper-icon-button icon="perm-identity"></paper-icon-button>
+          <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
+          <paper-badge id="count" for="msg-icon"></paper-badge>
         </paper-toolbar>
 
         <div>Content goes here...</div>
