@@ -7,6 +7,7 @@
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bower_components/iron-image/iron-image.html">
 <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="bower_components/paper-badge/paper-badge.html">
 
 <link rel="import" href="bower_components/paper-material/paper-material.html">
 <link rel="import" href="bower_components/paper-input/paper-input.html">
@@ -69,8 +70,8 @@
 
           <paper-material elevation="5" class="layout horizontal write">
             <paper-input id='input' label="Type message..." class="flex"
-                         allowedPattern=".+" preventInvalidInput></paper-input>
-            <paper-fab icon="send"></paper-fab>
+                         allowedPattern=".+" preventInvalidInput on-keyup='_onkeyup'></paper-input>
+            <paper-fab icon="send" on-tap="_send"></paper-fab>
           </paper-material>
         </div>
       </paper-header-panel>
@@ -78,7 +79,7 @@
 
     <paper-dialog id="setup" modal="true" class="layout vertical center">
        <h2>What's your Nickname</h2>
-       <paper-input class="flex" style="width: 80%" value={{name}}></paper-input>
+       <paper-input value={{name}}></paper-input>
        <paper-button dialog-confirm raised>Accept</paper-button>
     </paper-dialog>
 
@@ -99,8 +100,31 @@
         child.ts = cell.data;
       }
     },
+    observers: [
+      '_onitems(items.*)'
+    ],
     _setup: function() {
       this.$.setup.open();
+    },
+    _send: function() {
+      var val = this.$.input.value;
+      if (val) {
+        var msg = {owner: this.name, message: this.$.input.value, ts: Date.now()};
+        this.push('items', msg);
+        this.$.input.value = '';
+        this.fire('new-msg', msg)
+      }
+    },
+    _onkeyup(e) {
+      if (e.keyCode == 13) {
+        this._send();
+      }
+    },
+    _onitems(items) {
+      var l = this.$.grid.items.length;
+      this.$.grid.size = l;
+      this.$.grid.scrollToRow(l - 1);
+      this.$.count.label = '' + l;
     }
   });
 </script>
