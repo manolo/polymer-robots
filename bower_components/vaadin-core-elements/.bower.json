@@ -1,0 +1,47 @@
+{
+  "name": "vaadin-core-elements",
+  "version": "0.3.0",
+  "authors": [
+    "Vaadin Ltd"
+  ],
+  "description": "Vaadin Core Elements is an evolving set of free, open sourced custom HTML elements, built using Polymer, for building mobile and desktop web applications in modern browsers.",
+  "license": "Apache License 2.0",
+  "keywords": [
+    "vaadin",
+    "core",
+    "elements",
+    "web",
+    "components",
+    "webcomponents",
+    "web-components"
+  ],
+  "main": "vaadin-core-elements.html",
+  "ignore": [
+    "**/.*",
+    "**/node_modules",
+    "**/bower_components",
+    "**/test",
+    "**/tests"
+  ],
+  "dependencies": {
+    "vaadin-grid": "vaadin/vaadin-grid#~1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#~1.1.0",
+    "elements-demo-resources": "vaadin/elements-demo-resources#master"
+  },
+  "resolutions": {
+    "polymer": "v1.1.1"
+  },
+  "homepage": "https://github.com/Vaadin/vaadin-core-elements",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "e0d454f56deafa9ab351f699808de37b42cec56e"
+  },
+  "_source": "git://github.com/Vaadin/vaadin-core-elements.git",
+  "_target": "^0.3.0",
+  "_originalSource": "Vaadin/vaadin-core-elements",
+  "_direct": true
+}
