@@ -101,6 +101,10 @@ td:nth-child(2).vaadin-grid {
   color: grey;
   font-size: 70%;
 }
+td:nth-child(3).vaadin-grid {
+  width: 20px;
+  word-wrap: break-word;
+}
 
 /* tima-ago element */
 time-ago iron-icon {
