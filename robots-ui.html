@@ -14,8 +14,6 @@
 <link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="time-ago.html">
 
-
-
 <dom-module id="robots-ui">
   <template>
     <paper-drawer-panel>
@@ -49,8 +47,27 @@
           <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
           <paper-badge id="count" for="msg-icon"></paper-badge>
         </paper-toolbar>
-        
         <div class="layout vertical fit">
+          <vaadin-grid id="grid" class="flex" rows="auto">
+            <table>
+              <colgroup>
+                <col name="owner" width='40'/>
+                <col name="owner" width='70'/>
+                <col name="message" flex />
+                <col name="ts" width='40'/>
+              </colgroup>
+              <thead hidden></thead>
+              <tbody>
+                <tr>
+                  <td><img src="https://robohash.org/foo" /></td>
+                  <td>Robot Name</td>
+                  <td>Lorem ipsum dolor sit amet.</td>
+                  <td><time-ago ts='just now'></time-ago></td>
+                </tr>
+              </tbody>
+            </table>
+          </vaadin-grid>
+
           <paper-material elevation="5" class="layout horizontal write">
             <paper-input id='input' label="Type message..." class="flex"
                          allowedPattern=".+" preventInvalidInput></paper-input>
