@@ -19,6 +19,7 @@
 <link rel="import" href="bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
 
 <dom-module id="robots-ui">
   <template>
@@ -30,7 +31,9 @@
           <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
           <div class="top">Robots Chat</div>
           <img class="middle" src="https://robohash.org/foo" />
-          <div class="bottom">{{name}}</div>
+          <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Select a Robot"
+            value="{{name}}"></vaadin-combo-box>
+          <!-- <div class="bottom">{{name}}</div> -->
         </paper-toolbar>
 
         <paper-menu selected="0" selectable="paper-icon-item">
