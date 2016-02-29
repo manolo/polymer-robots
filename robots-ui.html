@@ -14,6 +14,9 @@
 <link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
 <link rel="import" href="time-ago.html">
 
+<link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
+
 <dom-module id="robots-ui">
   <template>
     <paper-drawer-panel>
@@ -22,7 +25,7 @@
           <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
           <div class="top">Robots Chat</div>
           <img class="middle" src="https://robohash.org/foo" />
-          <div class="bottom">Robot Name</div>
+          <div class="bottom">{{name}}</div>
         </paper-toolbar>
 
         <paper-menu selected="0" selectable="paper-icon-item">
@@ -43,7 +46,7 @@
           <div class="flex title">Inbox</div>
           <paper-icon-button icon="search"></paper-icon-button>
           <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="perm-identity"></paper-icon-button>
+          <paper-icon-button icon="perm-identity" on-tap="_setup"></paper-icon-button>
           <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
           <paper-badge id="count" for="msg-icon"></paper-badge>
         </paper-toolbar>
@@ -77,10 +80,19 @@
       </paper-header-panel>
     </paper-drawer-panel>
 
+    <paper-dialog id="setup" modal="true" class="layout vertical center">
+       <h2>What's your Nickname</h2>
+       <paper-input class="flex" style="width: 80%" value={{name}}></paper-input>
+       <paper-button dialog-confirm raised>Accept</paper-button>
+    </paper-dialog>
+
   </template>
 </dom-module>
 <script>
   Polymer({
     is: "robots-ui",
+    _setup: function() {
+      this.$.setup.open();
+    }
   });
 </script>
