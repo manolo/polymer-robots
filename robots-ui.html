@@ -22,7 +22,7 @@
 <dom-module id="robots-ui">
   <template>
     <iron-localstorage name="robot-name" value={{name}}></iron-localstorage>
-    
+
     <paper-drawer-panel>
       <paper-header-panel drawer>
         <paper-toolbar id="navheader"  class="tall">
@@ -55,7 +55,7 @@
           <paper-badge id="count" for="msg-icon"></paper-badge>
         </paper-toolbar>
         <div class="layout vertical fit">
-          <vaadin-grid id="grid" class="flex" rows="auto">
+          <vaadin-grid id="grid" class="flex" rows="auto" items="{{items}}">
             <table>
               <colgroup>
                 <col name="owner" width='40'/>
@@ -64,14 +64,6 @@
                 <col name="ts" width='40'/>
               </colgroup>
               <thead hidden></thead>
-              <tbody>
-                <tr>
-                  <td><img src="https://robohash.org/foo" /></td>
-                  <td>Robot Name</td>
-                  <td>Lorem ipsum dolor sit amet.</td>
-                  <td><time-ago ts='just now'></time-ago></td>
-                </tr>
-              </tbody>
             </table>
           </vaadin-grid>
 
@@ -95,6 +87,18 @@
 <script>
   Polymer({
     is: "robots-ui",
+    ready: function() {
+      this.$.grid.columns[0].renderer = function(cell){
+        var child = cell.element.children[0] || document.createElement('img');
+        cell.element.appendChild(child);
+        child.src = 'https://robohash.org/foo/' + cell.data;
+      }
+      this.$.grid.columns[3].renderer = function(cell){
+        var child = cell.element.children[0] || document.createElement('time-ago');
+        cell.element.appendChild(child);
+        child.ts = cell.data;
+      }
+    },
     _setup: function() {
       this.$.setup.open();
     }

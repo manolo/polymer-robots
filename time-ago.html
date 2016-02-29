@@ -4,17 +4,43 @@
   <style>
   </style>
   <template>
-    <iron-icon icon="star"></iron-icon>
+    <iron-icon icon="[[_timeAgo(ts, 1)]]"></iron-icon>
     <div>
-     [[_timeAgo(ts)]]
+     [[_timeAgo(ts, 0)]]
     </div>
   </template>
 </dom-module>
 <script>
   Polymer({
     is: "time-ago",
-    _timeAgo: function(ts) {
-      return ts;
+    _timeAgo: function(ts, i) {
+      var now = Date.now();
+      var diff = ~~((now - ts) / 1000);
+      var secs = ~~(diff % 60);
+      var min = ~~(diff / 60);
+      var hours = ~~(min / 60);
+      var days = ~~(hours / 24);
+      var weeks = ~~(days / 7);
+      var months = ~~(days / 31);
+      var timeAgo = "";
+      var starIcon = "star-border";
+      if (min == 0) {
+        timeAgo = secs < 30 ? "just now" : (secs + " secs ago");
+        starIcon = "star";
+      } else if (min < 60) {
+        timeAgo = min + " mins ago";
+        starIcon = "star";
+      } else if (hours < 24) {
+        timeAgo = hours + " hours ago";
+        starIcon = "star-half";
+      } else if (days < 7) {
+        timeAgo = days + " days ago";
+      } else if (days < 30) {
+        timeAgo = weeks + " weeks ago";
+      } else {
+        timeAgo = months + " months ago";
+      }
+      return [timeAgo, starIcon][i];
     }
   });
 </script>
