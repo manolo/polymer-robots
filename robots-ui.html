@@ -7,6 +7,7 @@
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="bower_components/iron-image/iron-image.html">
 <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="bower_components/paper-badge/paper-badge.html">
 
 <link rel="import" href="bower_components/paper-material/paper-material.html">
 <link rel="import" href="bower_components/paper-input/paper-input.html">
@@ -18,18 +19,21 @@
 <link rel="import" href="bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
 
 <dom-module id="robots-ui">
   <template>
     <iron-localstorage name="robot-name" value={{name}}></iron-localstorage>
-    
+
     <paper-drawer-panel>
       <paper-header-panel drawer>
         <paper-toolbar id="navheader"  class="tall">
           <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
           <div class="top">Robots Chat</div>
           <img class="middle" src="https://robohash.org/+[[name]]" />
-          <div class="middle">{{name}}</div>
+          <div class="middle">[[name]]</div>
+          <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Select a Robot"
+            value="{{name}}"></vaadin-combo-box>
         </paper-toolbar>
 
         <paper-menu selected="0" selectable="paper-icon-item">
@@ -55,7 +59,7 @@
           <paper-badge id="count" for="msg-icon"></paper-badge>
         </paper-toolbar>
         <div class="layout vertical fit">
-          <vaadin-grid id="grid" class="flex" rows="auto">
+          <vaadin-grid id="grid" class="flex" rows="auto" items="{{items}}">
             <table>
               <colgroup>
                 <col name="owner" width='40'/>
@@ -64,21 +68,13 @@
                 <col name="ts" width='40'/>
               </colgroup>
               <thead hidden></thead>
-              <tbody>
-                <tr>
-                  <td><img src="https://robohash.org/foo" /></td>
-                  <td>Robot Name</td>
-                  <td>Lorem ipsum dolor sit amet.</td>
-                  <td><time-ago ts='just now'></time-ago></td>
-                </tr>
-              </tbody>
             </table>
           </vaadin-grid>
 
           <paper-material elevation="5" class="layout horizontal write">
             <paper-input id='input' label="Type message..." class="flex"
-                         allowedPattern=".+" preventInvalidInput></paper-input>
-            <paper-fab icon="send"></paper-fab>
+                         allowedPattern=".+" preventInvalidInput on-keyup='_onkeyup'></paper-input>
+            <paper-fab icon="send" on-tap="_send"></paper-fab>
           </paper-material>
         </div>
       </paper-header-panel>
@@ -86,7 +82,7 @@
 
     <paper-dialog id="setup" modal="true" class="layout vertical center">
        <h2>What's your Nickname</h2>
-       <paper-input class="flex" style="width: 80%" value={{name}}></paper-input>
+       <paper-input value={{name}}></paper-input>
        <paper-button dialog-confirm raised>Accept</paper-button>
     </paper-dialog>
 
@@ -95,8 +91,43 @@
 <script>
   Polymer({
     is: "robots-ui",
+    ready: function() {
+      this.$.grid.columns[0].renderer = function(cell){
+        var child = cell.element.children[0] || document.createElement('img');
+        cell.element.appendChild(child);
+        child.src = 'https://robohash.org/+' + cell.data;
+      }
+      this.$.grid.columns[3].renderer = function(cell){
+        var child = cell.element.children[0] || document.createElement('time-ago');
+        cell.element.appendChild(child);
+        child.ts = cell.data;
+      }
+    },
+    observers: [
+      '_onitems(items.*)'
+    ],
     _setup: function() {
       this.$.setup.open();
+    },
+    _send: function() {
+      var val = this.$.input.value;
+      if (val) {
+        var msg = {owner: this.name, message: this.$.input.value, ts: Date.now()};
+        this.push('items', msg);
+        this.$.input.value = '';
+        this.fire('new-msg', msg)
+      }
+    },
+    _onkeyup: function(e) {
+      if (e.keyCode == 13) {
+        this._send();
+      }
+    },
+    _onitems: function(items) {
+      var l = this.$.grid.items.length;
+      this.$.grid.size = l;
+      this.$.grid.scrollToRow(l - 1);
+      this.$.count.label = '' + l;
     }
   });
 </script>
