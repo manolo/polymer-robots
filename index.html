@@ -11,6 +11,11 @@
   <robots-ui></robots-ui>
   <script>
     HTMLImports.whenReady(function() {
+      var ui = document.querySelector('robots-ui');
+      ui.items = [
+        {owner: 'r2d2', message: 'Lorem ipsum', ts: Date.now()},
+        {owner: 'r2d2', message: 'sunt in culpa', ts: Date.now()},
+      ];
     });
   </script>
 </body>
