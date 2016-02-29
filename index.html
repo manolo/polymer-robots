@@ -9,7 +9,19 @@
   <link rel="import" href="bower_components/vaadin-pouchdb/vaadin-pouchdb.html">
 </head>
 <body unresolved />
-  <vaadin-pouchdb dbname='chat' index="ts"></vaadin-pouchdb>
+  <!-- Use PouchDB (local database) -->
+  <vaadin-pouchdb dbname="chat" index="ts"></vaadin-pouchdb>
+
+  <!-- To use CouchDB -->
+  <!-- <vaadin-pouchdb dbname="http://sa:sa@127.0.0.1:5984/chat" index="ts"></vaadin-pouchdb> -->
+
+  <!-- To use PouchDB synchronizing to CouchDB -->
+  <!-- <vaadin-pouchdb
+    dbname="chats"
+    remote="http://sa:sa@localhost:5984/chat"
+    live=""
+    index="ts"></vaadin-pouchdb> -->
+
   <robots-ui></robots-ui>
   <script>
     HTMLImports.whenReady(function() {
