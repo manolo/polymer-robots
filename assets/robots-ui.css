@@ -3,32 +3,21 @@ body {
   font-family: arial;
 }
 
+/* APP colors */
 paper-toolbar, paper-fab {
   background-color: #009688 !important;
   color: white;
 }
-vaadin-combo-box input,
-vaadin-combo-box iron-icon {
-  color: white !important;
-  fill: white !important;
-}
 
+ /* Left Tool Bar */
 paper-toolbar .top {
   z-index: 1;
   font-size: 1.4em;
 }
 #coverimage {
-  height: 192px;
+  height: 191px;
   top: 0;
 }
-paper-icon-item {
-  display: block;
-  padding: 5px;
-}
-paper-icon-item iron-icon {
-  width: 56px !important;
-}
-
 #navheader img {
   width: 80px;
   height: 80px;
@@ -52,19 +41,46 @@ paper-icon-item iron-icon {
 #bottomBar #label {
   color: #FFC107 !important;
 }
+vaadin-combo-box input,
+vaadin-combo-box iron-icon {
+  color: white !important;
+  fill: white !important;
+}
 
+/* Left Menu */
+paper-icon-item {
+  display: block;
+  padding: 5px;
+}
+paper-icon-item iron-icon {
+  width: 56px !important;
+}
+
+/* Send message Form */
 .write {
   padding: 0px 20px 5px 20px;
 }
 
+/* Settings dialog */
 paper-dialog {
   padding: 5px;
   min-width: 500px;
 }
-paper-button {
+paper-dialog paper-button {
   padding: 10px !important;
   color: black;
 }
+paper-dialog paper-input {
+  width: 80%;
+  margin-bottom: 40px;
+}
+
+/* Misc */
+paper-input-container {
+  padding: 0px;
+}
+
+/* Badge */
 paper-badge {
   margin: 5px -10px;
 }
@@ -86,6 +102,7 @@ td:nth-child(2).vaadin-grid {
   font-size: 70%;
 }
 
+/* tima-ago element */
 time-ago iron-icon {
   width: 20px !important;
   height: 20px !important;
