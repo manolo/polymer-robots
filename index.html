@@ -19,9 +19,15 @@
         'Sona', 'Boomer', 'Terra', 'Qwerty', 'Ayzoid', 'Ac', 'Scrappie', 'Skip', 'R2D2', 'Lego',
         'Plier', 'Grezzer', 'Ihuxroid', 'Akmoid', 'Talus', 'Cyb', 'Tera', 'Ratchet', 'Umap', 'Akbtron'
       ]
-      db.query().then(rows => {
-        ui.set('items', rows);
+      ui.addEventListener('new-msg', function(e) {
+        db.post(e.detail);
       });
+      ui._reload = function() {
+        db.query().then(rows => {
+          ui.set('items', rows);
+        });
+      }
+      ui._reload();
     });
   </script>
 </body>
