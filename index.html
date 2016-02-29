@@ -6,20 +6,22 @@
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
   <link rel="stylesheet" href="assets/robots-ui.css">
   <link rel="import" href="robots-ui.html">
+  <link rel="import" href="bower_components/vaadin-pouchdb/vaadin-pouchdb.html">
 </head>
 <body unresolved />
+  <vaadin-pouchdb dbname='chat' index="ts"></vaadin-pouchdb>
   <robots-ui></robots-ui>
   <script>
     HTMLImports.whenReady(function() {
       var ui = document.querySelector('robots-ui');
-      ui.items = [
-        {owner: 'r2d2', message: 'Lorem ipsum', ts: Date.now()},
-        {owner: 'r2d2', message: 'sunt in culpa', ts: Date.now()},
-      ];
+      var db = document.querySelector('vaadin-pouchdb');
       ui.robots = [
         'Sona', 'Boomer', 'Terra', 'Qwerty', 'Ayzoid', 'Ac', 'Scrappie', 'Skip', 'R2D2', 'Lego',
         'Plier', 'Grezzer', 'Ihuxroid', 'Akmoid', 'Talus', 'Cyb', 'Tera', 'Ratchet', 'Umap', 'Akbtron'
       ]
+      db.query().then(rows => {
+        ui.set('items', rows);
+      });
     });
   </script>
 </body>
