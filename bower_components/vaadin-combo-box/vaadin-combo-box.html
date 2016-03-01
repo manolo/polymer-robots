@@ -581,7 +581,7 @@ enable usage within an `iron-form`.
 
     _valueChanged: function(value) {
       if (value === undefined || value === null) {
-        this.value = '';
+        return;
       }
 
       var valueIndex = this._indexOfValue(value);
