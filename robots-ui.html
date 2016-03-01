@@ -31,7 +31,7 @@
         <paper-toolbar id="navheader"  class="tall">
           <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
           <div class="top">Robots Chat</div>
-          <img class="middle" src="https://robohash.org/[[name]]" />
+          <img class="middle" src="https://robohash.org/+[[name]]" />
           <div class="middle">{{name}}</div>
           <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Change your Robot"
             value="{{name}}"></vaadin-combo-box>
@@ -97,7 +97,7 @@
       this.$.grid.columns[0].renderer = function(cell){
         var child = cell.element.children[0] || document.createElement('img');
         cell.element.appendChild(child);
-        child.src = 'https://robohash.org/foo/' + cell.data;
+        child.src = 'https://robohash.org/+' + cell.data;
       }
       this.$.grid.columns[3].renderer = function(cell){
         var child = cell.element.children[0] || document.createElement('time-ago');
