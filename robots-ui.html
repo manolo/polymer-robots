@@ -20,6 +20,7 @@
 
 <link rel="import" href="bower_components/iron-localstorage/iron-localstorage.html">
 <link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="bower_components/paper-spinner/paper-spinner-lite.html">
 
 <dom-module id="robots-ui">
   <template>
@@ -52,8 +53,9 @@
         <paper-toolbar class="paper-header headerClass">
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           <div class="flex title">Inbox</div>
+          <paper-spinner-lite active hidden$="[[!spin]]"></paper-spinner-lite>
+          <paper-icon-button icon="refresh" on-tap="_reload" hidden$="[[spin]]"></paper-icon-button>
           <paper-icon-button icon="search"></paper-icon-button>
-          <paper-icon-button icon="refresh" on-tap="_reload"></paper-icon-button>
           <paper-icon-button icon="perm-identity" on-tap="_setup"></paper-icon-button>
           <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
           <paper-badge id="count" for="msg-icon"></paper-badge>
@@ -118,16 +120,16 @@
         this.fire('new-msg', msg)
       }
     },
-    _onkeyup(e) {
+    _onkeyup: function(e) {
       if (e.keyCode == 13) {
         this._send();
       }
     },
-    _onitems(items) {
+    _onitems: function(items) {
       var l = this.$.grid.items.length;
       this.$.grid.size = l;
       this.$.grid.scrollToRow(l - 1);
       this.$.count.label = '' + l;
-    }
+    },
   });
 </script>

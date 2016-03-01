@@ -29,8 +29,10 @@
         db.post(e.detail);
       });
       ui._reload = function() {
+        ui.spin = true;
         db.query().then(rows => {
           ui.set('items', rows);
+          ui.spin = false;
         });
       };
       db.changes(function(msg) {

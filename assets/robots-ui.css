@@ -56,7 +56,15 @@ paper-icon-item {
 paper-icon-item iron-icon {
   width: 56px !important;
 }
-
+/* */
+paper-spinner-lite {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 8px;
+}
+.paper-spinner-lite {
+  border-color: white !important;
+}
 /* Send message Form */
 .write {
   padding: 0px 20px 5px 20px;
