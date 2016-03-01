@@ -32,6 +32,7 @@ paper-toolbar .top {
 }
 #bottomBar #labelAndInputContainer,
 #bottomBar #label,
+#middleBar > div,
 #bottomBar > div {
   padding-left: 16px;
 }

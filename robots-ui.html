@@ -30,10 +30,10 @@
         <paper-toolbar id="navheader"  class="tall">
           <iron-image class="fit" id="coverimage" src="assets/robots-bg.jpg" sizing="cover"></iron-image>
           <div class="top">Robots Chat</div>
-          <img class="middle" src="https://robohash.org/foo" />
-          <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Select a Robot"
+          <img class="middle" src="https://robohash.org/[[name]]" />
+          <div class="middle">{{name}}</div>
+          <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Change your Robot"
             value="{{name}}"></vaadin-combo-box>
-          <!-- <div class="bottom">{{name}}</div> -->
         </paper-toolbar>
 
         <paper-menu selected="0" selectable="paper-icon-item">
