@@ -39,6 +39,9 @@
         ui._reload();
       });
       ui._reload();
+      if (!ui.name) {
+        ui.name = ui.robots[~~(Math.random() * 1000) % ui.robots.length];
+      }
     });
   </script>
 </body>
