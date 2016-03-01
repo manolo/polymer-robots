@@ -1,0 +1,186 @@
+<!--
+@license
+Copyright (c) 2016 Vaadin Ltd.
+This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
+-->
+
+<!--
+`<vaadin-date-picker>` is a date selection field which includes a scrollable
+month calendar view.
+```html
+<vaadin-date-picker label="Birthday"></vaadin-date-picker>
+```
+```js
+datePicker.value = new Date();
+```
+When the selected `value` is changed, a `value-changed` event is triggered.
+@element vaadin-date-picker
+@demo demo/
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="vaadin-date-picker-overlay.html">
+<link rel="import" href="vaadin-locale-aware-behavior.html">
+
+<dom-module id="vaadin-date-picker">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #overlay {
+        height: 100vh;
+        width: 420px;
+      }
+
+      #inputcontainer,
+      #inputcontainer input  {
+        cursor: pointer;
+      }
+
+      #inputcontainer:not([hideclear]) #input {
+        margin-right: -24px;
+        display: block;
+      }
+
+      #clear,
+      #calendar {
+        width: 24px;
+        fill: var(--secondary-text-color, #222);
+      }
+
+      [hideclear] #clear {
+        display: none;
+      }
+
+      #calendar[open] {
+        /* Prevent immediate re-opening when the overlay is already open. */
+        pointer-events: none;
+      }
+    </style>
+
+    <paper-input-container id="inputcontainer" hideclear$="[[_hideClearIcon(value, _opened, _fullscreen)]]" on-touchend="_preventDefault">
+      <label id="label" on-tap="_open">[[label]]</label>
+      <input id="input" readonly is="iron-input" autocomplete="off" bind-value="[[_formatValue(value, _readyLocale)]]" type="text" on-tap="_open">
+      <iron-icon id="clear" suffix on-tap="_clear" icon="clear"></iron-icon>
+      <iron-icon id="calendar" suffix on-tap="_open" icon="event" open$="{{_opened}}"></iron-icon>
+    </paper-input-container>
+
+    <iron-dropdown id="dropdown" allow-outside-scroll on-iron-overlay-opened="_onOverlayOpened" opened="{{_opened}}">
+      <vaadin-date-picker-overlay id="overlay" fullscreen$=[[_fullscreen]] label=[[label]] locale="[[_readyLocale]]" on-date-tap="_close" selected-date="{{value}}" class="dropdown-content" on-cancel="_close"></vaadin-date-picker-overlay>
+    </iron-dropdown>
+
+    <iron-media-query query="[[_fullscreenMediaQuery]]" query-matches="{{_fullscreen}}"></iron-media-query>
+  </template>
+  <script>
+    Polymer({
+      is: 'vaadin-date-picker',
+
+      behaviors: [
+        vaadin.elements.datepicker.LocaleAwareBehavior
+      ],
+
+      listeners: {
+        'locale-ready': '_localeReady'
+      },
+
+      properties: {
+
+        /**
+         * The value for this element.
+         */
+        value: {
+          type: Date,
+          notify: true,
+          value: ''
+        },
+
+        /**
+         * Date which should be visible when there is no value selected.
+         */
+        initialPosition: {
+          type: Date,
+          value: function() {
+            return new Date();
+          }
+        },
+
+        /**
+         * The label for this element.
+         */
+        label: String,
+
+        // Property used for data-binding a locale that is ready to be used.
+        _readyLocale: String,
+
+        _opened: Boolean,
+
+        _fullscreen: {
+          value: false,
+          observer: '_updateAlignmentAndPosition'
+        },
+
+        _fullscreenMediaQuery: {
+          value: '(max-width: 420px), (orientation: landscape) and (max-width: 800px)'
+        }
+      },
+
+      _localeReady: function(e) {
+        this._readyLocale = e.detail.locale;
+      },
+
+      _open: function() {
+        this.$.dropdown.open();
+        this._updateAlignmentAndPosition();
+      },
+
+      _updateAlignmentAndPosition: function() {
+        if (this.$.dropdown.opened) {
+          var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+          this.$.dropdown.verticalOffset = this._fullscreen ? 0 : this.clientHeight;
+          this.$.dropdown.positionTarget = this._fullscreen ? document.documentElement : this;
+
+          var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+          var bottomAlign = this.getBoundingClientRect().top > viewportHeight / 2;
+          var rightAlign = this.getBoundingClientRect().left + this.clientWidth / 2 > viewportWidth / 2;
+          this.$.dropdown.verticalAlign = bottomAlign ? 'bottom' : 'top';
+          this.$.dropdown.horizontalAlign = rightAlign ? 'right' : 'left';
+
+          this.$.dropdown.refit();
+        }
+      },
+
+      _onOverlayOpened: function() {
+        if (this.value) {
+          this.$.overlay.scrollToDate(this.value);
+        } else {
+          this.$.overlay.scrollToDate(this.initialPosition);
+        }
+      },
+
+      _close: function() {
+        this.$.dropdown.close();
+      },
+
+      _hideClearIcon: function(value, opened, fullscreen) {
+        return !value || !opened || fullscreen;
+      },
+
+      _clear: function() {
+        this.value = '';
+      },
+
+      _preventDefault: function(e) {
+        e.preventDefault();
+      }
+
+    });
+  </script>
+</dom-module>
