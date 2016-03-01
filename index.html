@@ -32,7 +32,10 @@
         db.query().then(rows => {
           ui.set('items', rows);
         });
-      }
+      };
+      db.changes(function(msg) {
+        ui._reload();
+      });
       ui._reload();
     });
   </script>
