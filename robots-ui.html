@@ -24,6 +24,15 @@
 <dom-module id="robots-ui">
   <template>
     <iron-localstorage name="robot-name" value={{name}}></iron-localstorage>
+    <!-- remote="http://sa:sa@localhost:5984/chat" -->
+    <!-- remote="https://gwtcon:gwtcon2015@manolo.cloudant.com/chat" -->
+
+    <vaadin-pouchdb id="db"
+      dbname="chat"
+      index="ts"
+      data="{{items}}"
+      remote="http://sa:sa@localhost:5984/chat"
+     ></vaadin-pouchdb>
 
     <paper-drawer-panel>
       <paper-header-panel drawer>
@@ -32,8 +41,11 @@
           <div class="top">Robots Chat</div>
           <img class="middle" src="https://robohash.org/+[[name]]" />
           <div class="middle">[[name]]</div>
-          <vaadin-combo-box items="[[robots]]" class="bottom flex" label="Select a Robot"
-            value="{{name}}"></vaadin-combo-box>
+          <vaadin-combo-box class="bottom flex" label="Select a Robot"
+            value="{{name}}"
+            allow-custom-value
+            items='["Sona", "Boomer", "Terra", "Qwerty", "Ayzoid", "Ac", "Scrappie", "Skip", "R2D2", "Lego", "Plier", "Grezzer", "Ihuxroid", "Akmoid", "Talus", "Cyb", "Tera", "Ratchet", "Umap", "Akbtron"]'
+            ></vaadin-combo-box>
         </paper-toolbar>
 
         <paper-menu selected="0" selectable="paper-icon-item">
@@ -93,16 +105,19 @@
   Polymer({
     is: "robots-ui",
     ready: function() {
-      this.$.grid.columns[0].renderer = function(cell){
-        var child = cell.element.children[0] || document.createElement('img');
-        cell.element.appendChild(child);
-        child.src = 'https://robohash.org/+' + cell.data;
-      }
-      this.$.grid.columns[3].renderer = function(cell){
-        var child = cell.element.children[0] || document.createElement('time-ago');
-        cell.element.appendChild(child);
-        child.ts = cell.data;
-      }
+      this.$.grid.then(function(){
+        this.$.grid.columns[0].renderer = function(cell){
+          var child = cell.element.children[0] || document.createElement('img');
+          cell.element.appendChild(child);
+          child.src = 'https://robohash.org/+' + cell.data;
+        }
+        this.$.grid.columns[3].renderer = function(cell){
+          var child = cell.element.children[0] || document.createElement('time-ago');
+          cell.element.appendChild(child);
+          child.ts = cell.data;
+        }
+        this.$.db.query();
+      }.bind(this));
     },
     observers: [
       '_onitems(items.*)'
@@ -125,10 +140,7 @@
       }
     },
     _onitems: function(items) {
-      var l = this.$.grid.items.length;
-      this.$.grid.size = l;
-      this.$.grid.scrollToRow(l - 1);
-      this.$.count.label = '' + l;
+      this.$.grid.scrollToEnd();
     }
   });
 </script>

@@ -10,43 +10,8 @@
   <link rel="import" href="bower_components/vaadin-pouchdb/vaadin-pouchdb.html">
 </head>
 <body unresolved />
-  <!-- Use PouchDB (local database) -->
-  <vaadin-pouchdb dbname="chat" index="ts"></vaadin-pouchdb>
 
-  <!-- To use CouchDB -->
-  <!-- <vaadin-pouchdb dbname="http://sa:sa@127.0.0.1:5984/chat" index="ts"></vaadin-pouchdb> -->
+    <robots-ui></robots-ui>
 
-  <!-- To use PouchDB synchronizing to CouchDB -->
-  <!-- <vaadin-pouchdb
-    dbname="chats"
-    remote="http://sa:sa@localhost:5984/chat"
-    live=""
-    index="ts"></vaadin-pouchdb> -->
-
-  <robots-ui></robots-ui>
-  <script>
-    HTMLImports.whenReady(function() {
-      var ui = document.querySelector('robots-ui');
-      var db = document.querySelector('vaadin-pouchdb');
-      ui.robots = [
-        'Sona', 'Boomer', 'Terra', 'Qwerty', 'Ayzoid', 'Ac', 'Scrappie', 'Skip', 'R2D2', 'Lego',
-        'Plier', 'Grezzer', 'Ihuxroid', 'Akmoid', 'Talus', 'Cyb', 'Tera', 'Ratchet', 'Umap', 'Akbtron'
-      ]
-      ui.spin = true;
-      db.query().then(function(rows) {
-        ui.set('items', rows);
-        ui.spin = false;
-      });
-      ui.addEventListener('new-msg', function(e) {
-        db.post(e.detail);
-      });
-      ui._reload = function() {
-        db.query().then(rows => {
-          ui.set('items', rows);
-        });
-      }
-      ui._reload();
-    });
-  </script>
 </body>
 </html>
