@@ -32,7 +32,7 @@
 
     <vaadin-pouchdb id="db"
       index="ts"
-      dbname="chat"
+      dbname="pchat"
       data="{{items}}"
       status="{{status}}"
      ></vaadin-pouchdb>
@@ -80,6 +80,7 @@
             <paper-icon-button icon="perm-identity" on-tap="_setup"></paper-icon-button>
             <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
             <paper-badge id="count" for="msg-icon"></paper-badge>
+            <paper-icon-button icon="help" on-tap="_help"></paper-icon-button>
           </app-toolbar>
         </app-header>
         <div id="gridcontainer" class="layout vertical fit">
@@ -129,6 +130,7 @@
         }
         var itms = this.$.cbox.items;
         this.name = this.name || itms[~~(Math.random() * itms.length)];
+        this.items = this.items;
       }.bind(this));
     },
     observers: [
@@ -163,6 +165,9 @@
     },
     _spin: function(st) {
       return this.status != 'done';
+    },
+    _help: function() {
+      window.location = 'https://github.com/manolo/polymer-robots'
     }
   });
 </script>

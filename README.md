@@ -1,10 +1,13 @@
-A progressive and real-time (PWA) and PRPL application ready built on top of polymer with only 215 Lines of Code.
+A progressive application (PWA), that is PRPL ready, and that is built on the top of the Polymer library.
+It only has 215 Lines of Code, and supports realtime messages which are queued when the app is offline.
 
-It was written for my talk at the Voxxed Days 2016 (Vienna).
+Technologies used are: Polymer & Vaadin Elements, Service Workers, Pouchdb, and Cloudant.
 
-It follows the standard structure of a project created with the `polymer-cli` tool.
+It was initially written for my talks at the GWTCon 2015 (Florence) and the Voxxed Days 2016 (Vienna).
 
-Visit the live [demo](https://wc.demo.vaadin.com/robots/), then optionaly you could install it in your main screen.
+It follows the structure of the template PRPL project created with the `polymer-cli` tool.
+
+Visit the live [demo](https://wc.demo.vaadin.com/robots/) to see it in action. Then, you can optionaly install the App in your main screen if you have a compatible device.
 
 To run locally, clone the project and run:
 
@@ -24,6 +27,7 @@ The following command serves the minified version of the app in an unbundled sta
 ```
    $ polymer serve build/unbundled
 ```
+
 Or you can serve the minified version running this command: 
 
 ```

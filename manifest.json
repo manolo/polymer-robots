@@ -1,5 +1,6 @@
 {
-    "name": "Polymer & Vaadin Elements - Robots Chat",
+    "name": "Robots Chat",
+    "description": "A Robots Chat developes with Polymer & Vaadin Elements",
     "short_name": "Robots Chat",
     "icons": [
         {

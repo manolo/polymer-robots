@@ -108,7 +108,7 @@ td.vaadin-grid img {
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  background-image: url("robots-bg.jpg");
+  background-image: url("../assets/robots-tg.jpg");
 }
 
 td:nth-child(2).vaadin-grid {

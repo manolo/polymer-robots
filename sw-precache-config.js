@@ -4,7 +4,7 @@ module.exports = {
     handler: 'fastest',
     options: {
         cache: {
-          maxEntries: 40,
+          maxEntries: 50,
           name: 'robots-images'
         }
     }
@@ -13,6 +13,7 @@ module.exports = {
     'index.html',
     'manifest.json',
     'bower_components/webcomponentsjs/webcomponents-lite.min.js',
+    'assets/robots-tg.jpg',
     'assets/robots-bg.jpg',
     'assets/robots-ui.css',
     'assets/robots.png',
