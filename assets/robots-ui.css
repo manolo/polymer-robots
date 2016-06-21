@@ -4,44 +4,45 @@ body {
 }
 
 /* APP colors */
-paper-toolbar, paper-fab {
+paper-toolbar, paper-fab, app-toolbar {
   background-color: #009688 !important;
   color: white;
 }
 
+#lefthead app-toolbar {
+  background: transparent !important;
+}
+
+#lefthead {
+  background-image: url("../assets/robots-bg.jpg");
+}
  /* Left Tool Bar */
-paper-toolbar .top {
+paper-toolbar .top
+app-toolbar .top {
   z-index: 1;
   font-size: 1.4em;
 }
-#coverimage {
+#coverimage,
+#navheader {
   height: 191px;
   top: 0;
 }
-#navheader img {
-  width: 80px;
-  height: 80px;
+#middle img {
+  width: 60px;
+  height: 60px;
   border: solid 3px rgba(0, 234, 255, 0.32);
   border-radius: 50%;
 }
-#navheader {
-  overflow: hidden;
+#middle div {
+  padding-left: 10px;
 }
-#bottomBar {
-  padding: 0px !important;
+#bottom {
+  padding: 0px;
 }
-#bottomBar #labelAndInputContainer,
-#bottomBar #label,
-#middleBar > div,
-#bottomBar > div {
-  padding-left: 16px;
+#bottom label {
+  color: rgba(223, 255, 0, 0.76);
 }
-#scroller  {
-  max-height: 100% !important;
-}
-#bottomBar #label {
-  color: #FFC107 !important;
-}
+
 vaadin-combo-box input,
 vaadin-combo-box iron-icon {
   color: white !important;
@@ -92,6 +93,10 @@ paper-input-container {
 /* Badge */
 paper-badge {
   margin: 5px -10px;
+}
+
+#gridcontainer {
+  padding-top: 64px;
 }
 
 td.vaadin-grid, th.vaadin-grid {

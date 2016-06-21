@@ -1,0 +1,168 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../bower_components/paper-badge/paper-badge.html">
+
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../bower_components/vaadin-pouchdb/vaadin-pouchdb.html">
+
+<link rel="import" href="time-ago.html">
+
+<link rel="stylesheet" href="../assets/robots-ui.css">
+
+<dom-module id="robots-ui">
+  <template>
+    <iron-localstorage name="robot-name" value={{name}}></iron-localstorage>
+
+    <vaadin-pouchdb id="db"
+      index="ts"
+      dbname="chat"
+      data="{{items}}"
+      status="{{status}}"
+     ></vaadin-pouchdb>
+
+    <app-drawer-layout fullbleed>
+
+      <app-drawer>
+        <app-header id="lefthead" effects="waterfall" condenses reveals>
+          <app-toolbar>
+            <div>Robots Chat</div>
+          </app-toolbar>
+          <app-toolbar id="middle">
+            <img src="https://robohash.org/+[[name]]" />
+            <div>[[name]]</div>
+          </app-toolbar>
+          <app-toolbar id="bottom">
+            <vaadin-combo-box id='cbox' class="bottom flex" label="Select a Robot"
+              value="{{name}}"
+              allow-custom-value
+              items='["Sona", "Boomer", "Terra", "Qwerty", "Ayzoid", "Ac", "Scrappie", "Skip", "R2D2", "Lego", "Plier", "Grezzer", "Ihuxroid", "Akmoid", "Talus", "Cyb", "Tera", "Ratchet", "Umap", "Akbtron"]'
+              ></vaadin-combo-box>
+          </app-toolbar>
+        </app-header>
+
+        <paper-menu selected="0" selectable="paper-icon-item">
+          <paper-icon-item role="menuitem" value="Inbox" selected>
+            <iron-icon icon="label" item-icon></iron-icon>
+            Inbox
+          </paper-icon-item>
+          <paper-icon-item role="menuitem" value="Social">
+            <iron-icon icon="label" item-icon></iron-icon>
+            Social
+          </paper-icon-item>
+        </paper-menu>
+      </app-drawer>
+
+      <app-header-layout has-scrolling-region>
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div class="flex title">Inbox</div>
+            <paper-spinner-lite active hidden$="[[!_spin(status)]]"></paper-spinner-lite>
+            <paper-icon-button icon="refresh" on-tap="_reload" hidden$="[[_spin(status)]]"></paper-icon-button>
+            <paper-icon-button icon="search"></paper-icon-button>
+            <paper-icon-button icon="perm-identity" on-tap="_setup"></paper-icon-button>
+            <paper-icon-button id="msg-icon" icon="speaker-notes"></paper-icon-button>
+            <paper-badge id="count" for="msg-icon"></paper-badge>
+          </app-toolbar>
+        </app-header>
+        <div id="gridcontainer" class="layout vertical fit">
+          <vaadin-grid id="grid" class="flex" rows="auto" items="{{items}}">
+            <table>
+              <colgroup>
+                <col name="owner" width='48'/>
+                <col name="owner" width='70'/>
+                <col name="message" flex />
+                <col name="ts" width='50'/>
+              </colgroup>
+              <thead hidden></thead>
+            </table>
+          </vaadin-grid>
+
+          <paper-material elevation="5" class="layout horizontal write">
+            <paper-input id='input' label="Type message..." class="flex"
+                         allowedPattern=".+" preventInvalidInput on-keyup='_onkeyup'></paper-input>
+            <paper-fab icon="send" on-tap="_send"></paper-fab>
+          </paper-material>
+        </div>
+      </app-header-layout>
+    </app-drawer-layout>
+
+    <paper-dialog id="setup" modal="true" class="layout vertical center">
+       <h2>What's your Nickname</h2>
+       <paper-input value={{name}}></paper-input>
+       <paper-button dialog-confirm raised>Accept</paper-button>
+    </paper-dialog>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "robots-ui",
+    ready: function() {
+      this.$.grid.then(function(){
+        this.$.grid.columns[0].renderer = function(cell){
+          var child = cell.element.children[0] || document.createElement('img');
+          cell.element.appendChild(child);
+          child.src = 'https://robohash.org/+' + cell.data;
+        }
+        this.$.grid.columns[3].renderer = function(cell){
+          var child = cell.element.children[0] || document.createElement('time-ago');
+          cell.element.appendChild(child);
+          child.ts = cell.data;
+        }
+        var itms = this.$.cbox.items;
+        this.name = this.name || itms[~~(Math.random() * itms.length)];
+      }.bind(this));
+    },
+    observers: [
+      '_onitems(items.*)'
+    ],
+    _setup: function() {
+      this.$.setup.open();
+    },
+    _send: function() {
+      var val = this.$.input.value;
+      this.$.input.invalid = !val;
+      if (val) {
+        var msg = {owner: this.name, message: this.$.input.value, ts: Date.now()};
+        this.push('items', msg);
+        this.$.input.value = '';
+        this.fire('new-msg', msg)
+      } else {
+        this.$.input.focus();
+      }
+    },
+    _onkeyup: function(e) {
+      if (e.keyCode == 13) {
+        this._send();
+      }
+    },
+    _onitems: function(items) {
+      this.$.grid.scrollToEnd();
+      this.$.count.label = this.items.length;
+    },
+    _reload: function() {
+       this.$.db.query();
+    },
+    _spin: function(st) {
+      return this.status != 'done';
+    }
+  });
+</script>
